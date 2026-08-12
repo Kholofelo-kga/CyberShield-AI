@@ -17,9 +17,7 @@ const resultCard =
     document.getElementById("resultCard");
 
 
-// =====================================================
 // CHARACTER COUNTER
-// =====================================================
 
 input.addEventListener(
     "input",
@@ -32,15 +30,14 @@ input.addEventListener(
 );
 
 
-// =====================================================
 // CLEAR
-// =====================================================
 
 clearBtn.addEventListener(
     "click",
     () => {
 
-        input.value = "";
+        input.value =
+            "";
 
         counter.textContent =
             "0 / 5000";
@@ -74,16 +71,13 @@ clearBtn.addEventListener(
 
         resetConfidence();
 
-
         input.focus();
 
     }
 );
 
 
-// =====================================================
-// ANALYSE MESSAGE
-// =====================================================
+// ANALYSE
 
 analyseBtn.addEventListener(
     "click",
@@ -138,13 +132,17 @@ analyseBtn.addEventListener(
                             "POST",
 
                         headers: {
+
                             "Content-Type":
                                 "application/json"
+
                         },
 
                         body:
                             JSON.stringify({
+
                                 text: text
+
                             })
 
                     }
@@ -204,13 +202,9 @@ analyseBtn.addEventListener(
 );
 
 
-// =====================================================
-// RENDER RESULTS
-// =====================================================
+// DISPLAY RESULT
 
-function renderResult(
-    result
-) {
+function renderResult(result) {
 
     document.getElementById(
         "resultTitle"
@@ -254,9 +248,7 @@ function renderResult(
         result.recommendation;
 
 
-    // ================================================
-    // BADGE
-    // ================================================
+    // RISK BADGE
 
     const pill =
         document.getElementById(
@@ -264,9 +256,7 @@ function renderResult(
         );
 
 
-    if (
-        result.uncertain
-    ) {
+    if (result.uncertain) {
 
         pill.textContent =
             "Needs human review";
@@ -276,9 +266,7 @@ function renderResult(
 
     }
 
-    else if (
-        result.is_bullying
-    ) {
+    else if (result.is_bullying) {
 
         pill.textContent =
             "High risk";
@@ -299,9 +287,7 @@ function renderResult(
     }
 
 
-    // ================================================
     // CONFIDENCE BAR
-    // ================================================
 
     const confidenceBar =
         document.getElementById(
@@ -327,9 +313,7 @@ function renderResult(
     );
 
 
-    // ================================================
     // UNCERTAINTY BOX
-    // ================================================
 
     const uncertaintyBox =
         document.getElementById(
@@ -337,9 +321,7 @@ function renderResult(
         );
 
 
-    if (
-        result.uncertain
-    ) {
+    if (result.uncertain) {
 
         document.getElementById(
             "topScoreText"
@@ -376,9 +358,7 @@ function renderResult(
     }
 
 
-    // ================================================
-    // MODEL SCORES
-    // ================================================
+    // CATEGORY SCORES
 
     const scores =
         document.getElementById(
@@ -417,37 +397,19 @@ function renderResult(
 
             row.innerHTML =
                 `
-
                 <div class="score-label">
-
-                    ${escapeHtml(
-                        item.label
-                    )}
-
+                    ${escapeHtml(item.label)}
                 </div>
-
 
                 <div class="bar">
-
                     <div
-                        style="
-                            width:
-                            ${score}%
-                        "
-                    >
-                    </div>
-
+                        style="width:${score}%"
+                    ></div>
                 </div>
-
 
                 <div class="score-value">
-
-                    ${score.toFixed(
-                        2
-                    )}%
-
+                    ${score.toFixed(2)}%
                 </div>
-
                 `;
 
 
@@ -458,10 +420,6 @@ function renderResult(
         }
     );
 
-
-    // ================================================
-    // DISPLAY RESULT
-    // ================================================
 
     resultCard.classList.remove(
         "hidden"
@@ -481,9 +439,7 @@ function renderResult(
 }
 
 
-// =====================================================
 // RESET CONFIDENCE
-// =====================================================
 
 function resetConfidence() {
 
@@ -499,9 +455,7 @@ function resetConfidence() {
         );
 
 
-    if (
-        confidenceBar
-    ) {
+    if (confidenceBar) {
 
         confidenceBar.style.width =
             "0%";
@@ -509,9 +463,7 @@ function resetConfidence() {
     }
 
 
-    if (
-        confidenceLarge
-    ) {
+    if (confidenceLarge) {
 
         confidenceLarge.textContent =
             "0%";
@@ -521,17 +473,11 @@ function resetConfidence() {
 }
 
 
-// =====================================================
-// HTML ESCAPING
-// =====================================================
+// SAFE HTML
 
-function escapeHtml(
-    value
-) {
+function escapeHtml(value) {
 
-    return String(
-        value
-    )
+    return String(value)
 
         .replaceAll(
             "&",
