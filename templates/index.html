@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CyberShield AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="badge">AI + NLP Prototype</div>
+      <h1>CyberShield AI</h1>
+      <p class="subtitle">Cyberbullying detection for social-media text using TF-IDF and machine learning.</p>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Message analysis</span>
+          <h2>Analyse social-media text</h2>
+        </div>
+        <span id="counter" class="counter">0 / 5000</span>
+      </div>
+
+      <textarea
+        id="textInput"
+        maxlength="5000"
+        rows="7"
+        placeholder="Type or paste a social-media message here..."
+        aria-label="Social media message"></textarea>
+
+      <div class="actions">
+        <button id="analyseBtn">Analyse message</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
+      <p id="error" class="error hidden"></p>
+    </section>
+
+    <section id="resultCard" class="card result hidden" aria-live="polite">
+      <div class="result-top">
+        <div>
+          <span class="eyebrow">AI prediction</span>
+          <h2 id="resultTitle"></h2>
+          <p id="resultMessage" class="muted"></p>
+        </div>
+        <div id="riskPill" class="risk-pill"></div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <span>Classification</span>
+          <strong id="category"></strong>
+        </div>
+        <div class="metric">
+          <span>Confidence</span>
+          <strong id="confidence"></strong>
+        </div>
+        <div class="metric">
+          <span>Recommended action</span>
+          <strong id="recommendation"></strong>
+        </div>
+      </div>
+
+      <div class="scores-wrap">
+        <div class="section-heading compact">
+          <div>
+            <span class="eyebrow">Model probabilities</span>
+            <h3>All category scores</h3>
+          </div>
+        </div>
+        <div id="scores" class="scores"></div>
+      </div>
+
+      <p class="disclaimer">
+        This prototype provides a machine-learning prediction, not a final moderation decision.
+        Flagged content should be reviewed by a human moderator.
+      </p>
+    </section>
+
+    <section class="card about">
+      <span class="eyebrow">Prototype model</span>
+      <h2>How it works</h2>
+      <div class="flow">
+        <span>Text</span><b>→</b><span>TF-IDF</span><b>→</b><span>Logistic Regression</span><b>→</b><span>6-class prediction</span>
+      </div>
+      <p class="muted">
+        The deployed model predicts: age, gender, ethnicity, religion, other cyberbullying,
+        or not cyberbullying.
+      </p>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

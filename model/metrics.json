@@ -1,0 +1,17 @@
+{
+  "dataset_rows_original": 47692,
+  "duplicates_removed": 36,
+  "dataset_rows_used": 47656,
+  "test_split": 0.2,
+  "random_state": 42,
+  "accuracy": 0.8275283256399496,
+  "macro_f1": 0.8275431200211636,
+  "labels": [
+    "age",
+    "ethnicity",
+    "gender",
+    "not_cyberbullying",
+    "other_cyberbullying",
+    "religion"
+  ]
+}
