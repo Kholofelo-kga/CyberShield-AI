@@ -1,561 +1,671 @@
-const input =
-    document.getElementById("textInput");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const counter =
-    document.getElementById("counter");
+    <title>CyberShield AI</title>
 
-const analyseBtn =
-    document.getElementById("analyseBtn");
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
 
-const clearBtn =
-    document.getElementById("clearBtn");
+<body>
 
-const errorEl =
-    document.getElementById("error");
+    <!-- NAVIGATION -->
+    <header class="navbar">
 
-const resultCard =
-    document.getElementById("resultCard");
+        <div class="nav-container">
 
+            <a href="#home" class="brand">
+                <div class="brand-icon">CS</div>
 
-// =====================================================
-// CHARACTER COUNTER
-// =====================================================
+                <div>
+                    <strong>CyberShield AI</strong>
+                    <span>Research Prototype</span>
+                </div>
+            </a>
 
-input.addEventListener(
-    "input",
-    () => {
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#analyse">Analyse</a>
+                <a href="#model-info">Model Info</a>
+                <a href="#about">About</a>
+            </nav>
 
-        counter.textContent =
-            `${input.value.length} / 5000`;
+        </div>
 
-    }
-);
+    </header>
 
 
-// =====================================================
-// CLEAR
-// =====================================================
+    <main>
 
-clearBtn.addEventListener(
-    "click",
-    () => {
+        <!-- HERO -->
+        <section id="home" class="hero">
 
-        input.value = "";
+            <div class="hero-badge">
+                AI + NLP RESEARCH PROTOTYPE
+            </div>
 
-        counter.textContent =
-            "0 / 5000";
+            <h1>
+                CyberShield AI
+            </h1>
 
-        errorEl.textContent =
-            "";
+            <p class="hero-subtitle">
+                Intelligent cyberbullying detection for social-media text
+                using Natural Language Processing and machine learning.
+            </p>
 
-        errorEl.classList.add(
-            "hidden"
-        );
+            <div class="hero-actions">
 
-        resultCard.classList.add(
-            "hidden"
-        );
+                <a href="#analyse" class="primary-link">
+                    Analyse a Message
+                </a>
 
+                <a href="#model-info" class="secondary-link">
+                    View Model Information
+                </a>
 
-        const uncertaintyBox =
-            document.getElementById(
-                "uncertaintyBox"
-            );
+            </div>
 
+        </section>
 
-        if (uncertaintyBox) {
 
-            uncertaintyBox.classList.add(
-                "hidden"
-            );
+        <div class="container">
 
-        }
+            <!-- ANALYSIS -->
+            <section
+                id="analyse"
+                class="card analyse-card"
+            >
 
+                <div class="section-header">
 
-        resetConfidence();
+                    <div>
+                        <span class="eyebrow">
+                            MESSAGE ANALYSIS
+                        </span>
 
+                        <h2>
+                            Analyse social-media text
+                        </h2>
 
-        input.focus();
+                        <p>
+                            Enter or paste a social-media message below.
+                            CyberShield AI will estimate the most likely
+                            cyberbullying classification.
+                        </p>
+                    </div>
 
-    }
-);
-
-
-// =====================================================
-// ANALYSE MESSAGE
-// =====================================================
-
-analyseBtn.addEventListener(
-    "click",
-    async () => {
-
-        const text =
-            input.value.trim();
-
-
-        errorEl.textContent =
-            "";
-
-        errorEl.classList.add(
-            "hidden"
-        );
-
-
-        resultCard.classList.add(
-            "hidden"
-        );
-
-
-        if (!text) {
-
-            errorEl.textContent =
-                "Please enter a message to analyse.";
-
-            errorEl.classList.remove(
-                "hidden"
-            );
-
-            return;
-
-        }
-
-
-        analyseBtn.disabled =
-            true;
-
-        analyseBtn.textContent =
-            "Analysing...";
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "/api/predict",
-                    {
-
-                        method:
-                            "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                text: text
-                            })
-
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (
-                !response.ok ||
-                !data.ok
-            ) {
-
-                throw new Error(
-                    data.error ||
-                    "Prediction failed."
-                );
-
-            }
-
-
-            renderResult(
-                data.result
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                error
-            );
-
-
-            errorEl.textContent =
-                error.message ||
-                "Prediction failed. Please try again.";
-
-
-            errorEl.classList.remove(
-                "hidden"
-            );
-
-
-        } finally {
-
-            analyseBtn.disabled =
-                false;
-
-            analyseBtn.textContent =
-                "Analyse Message";
-
-        }
-
-    }
-);
-
-
-// =====================================================
-// RENDER RESULTS
-// =====================================================
-
-function renderResult(
-    result
-) {
-
-    document.getElementById(
-        "resultTitle"
-    ).textContent =
-        result.title;
-
-
-    document.getElementById(
-        "resultMessage"
-    ).textContent =
-        result.message;
-
-
-    document.getElementById(
-        "category"
-    ).textContent =
-        result.category;
-
-
-    const confidence =
-        Number(
-            result.confidence
-        );
-
-
-    document.getElementById(
-        "confidence"
-    ).textContent =
-        `${confidence.toFixed(2)}%`;
-
-
-    document.getElementById(
-        "confidenceLarge"
-    ).textContent =
-        `${confidence.toFixed(2)}%`;
-
-
-    document.getElementById(
-        "recommendation"
-    ).textContent =
-        result.recommendation;
-
-
-    // ================================================
-    // BADGE
-    // ================================================
-
-    const pill =
-        document.getElementById(
-            "riskPill"
-        );
-
-
-    if (
-        result.uncertain
-    ) {
-
-        pill.textContent =
-            "Needs human review";
-
-        pill.className =
-            "risk-pill review";
-
-    }
-
-    else if (
-        result.is_bullying
-    ) {
-
-        pill.textContent =
-            "High risk";
-
-        pill.className =
-            "risk-pill high";
-
-    }
-
-    else {
-
-        pill.textContent =
-            "Low risk";
-
-        pill.className =
-            "risk-pill low";
-
-    }
-
-
-    // ================================================
-    // CONFIDENCE BAR
-    // ================================================
-
-    const confidenceBar =
-        document.getElementById(
-            "confidenceBar"
-        );
-
-
-    confidenceBar.style.width =
-        "0%";
-
-
-    setTimeout(
-        () => {
-
-            confidenceBar.style.width =
-                `${Math.min(
-                    confidence,
-                    100
-                )}%`;
-
-        },
-        100
-    );
-
-
-    // ================================================
-    // UNCERTAINTY BOX
-    // ================================================
-
-    const uncertaintyBox =
-        document.getElementById(
-            "uncertaintyBox"
-        );
-
-
-    if (
-        result.uncertain
-    ) {
-
-        document.getElementById(
-            "topScoreText"
-        ).textContent =
-            `${confidence.toFixed(2)}%`;
-
-
-        document.getElementById(
-            "secondCategory"
-        ).textContent =
-            result.second_category;
-
-
-        document.getElementById(
-            "secondScore"
-        ).textContent =
-            `${Number(
-                result.second_score
-            ).toFixed(2)}%`;
-
-
-        uncertaintyBox.classList.remove(
-            "hidden"
-        );
-
-    }
-
-    else {
-
-        uncertaintyBox.classList.add(
-            "hidden"
-        );
-
-    }
-
-
-    // ================================================
-    // MODEL SCORES
-    // ================================================
-
-    const scores =
-        document.getElementById(
-            "scores"
-        );
-
-
-    scores.innerHTML =
-        "";
-
-
-    result.scores.forEach(
-        item => {
-
-            const score =
-                Math.max(
-                    0,
-                    Math.min(
-                        100,
-                        Number(
-                            item.score
-                        )
-                    )
-                );
-
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "score-row";
-
-
-            row.innerHTML =
-                `
-
-                <div class="score-label">
-
-                    ${escapeHtml(
-                        item.label
-                    )}
+                    <span id="counter" class="counter">
+                        0 / 5000
+                    </span>
 
                 </div>
 
 
-                <div class="bar">
+                <textarea
+                    id="textInput"
+                    maxlength="5000"
+                    rows="8"
+                    placeholder="Type or paste a social-media message here..."
+                ></textarea>
+
+
+                <div class="analysis-actions">
+
+                    <button
+                        id="analyseBtn"
+                        class="btn-primary"
+                    >
+                        Analyse Message
+                    </button>
+
+                    <button
+                        id="clearBtn"
+                        class="btn-secondary"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="error"
+                    class="error hidden"
+                ></p>
+
+            </section>
+
+
+            <!-- RESULT -->
+            <section
+                id="resultCard"
+                class="card result-card hidden"
+                aria-live="polite"
+            >
+
+                <div class="result-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            AI PREDICTION
+                        </span>
+
+                        <h2 id="resultTitle">
+                        </h2>
+
+                        <p
+                            id="resultMessage"
+                            class="result-description"
+                        ></p>
+
+                    </div>
+
 
                     <div
-                        style="
-                            width:
-                            ${score}%
-                        "
-                    >
+                        id="riskPill"
+                        class="risk-pill"
+                    ></div>
+
+                </div>
+
+
+                <!-- RESULT METRICS -->
+                <div class="result-metrics">
+
+                    <div class="metric-card">
+
+                        <div class="metric-icon">
+                            C
+                        </div>
+
+                        <div>
+                            <span>
+                                Classification
+                            </span>
+
+                            <strong id="category">
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <div class="metric-icon">
+                            %
+                        </div>
+
+                        <div>
+                            <span>
+                                Confidence
+                            </span>
+
+                            <strong id="confidence">
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <div class="metric-icon">
+                            R
+                        </div>
+
+                        <div>
+                            <span>
+                                Recommended Action
+                            </span>
+
+                            <strong id="recommendation">
+                            </strong>
+                        </div>
+
                     </div>
 
                 </div>
 
 
-                <div class="score-value">
+                <!-- CONFIDENCE -->
+                <div class="confidence-section">
 
-                    ${score.toFixed(
-                        2
-                    )}%
+                    <div class="confidence-heading">
+
+                        <div>
+                            <span class="eyebrow">
+                                CONFIDENCE
+                            </span>
+
+                            <h3>
+                                Prediction confidence
+                            </h3>
+                        </div>
+
+                        <strong
+                            id="confidenceLarge"
+                            class="confidence-value"
+                        >
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confidence-track">
+
+                        <div
+                            id="confidenceBar"
+                            class="confidence-fill"
+                        ></div>
+
+                    </div>
 
                 </div>
 
-                `;
+
+                <!-- UNCERTAINTY -->
+                <div
+                    id="uncertaintyBox"
+                    class="uncertainty-box hidden"
+                >
+
+                    <div class="uncertainty-icon">
+                        !
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Why this prediction needs review
+                        </strong>
+
+                        <p>
+                            The leading prediction has a confidence of
+                            <span id="topScoreText"></span>.
+                            The second most likely category is
+                            <span id="secondCategory"></span>
+                            at
+                            <span id="secondScore"></span>.
+                        </p>
+
+                        <p>
+                            Because these probabilities are relatively close,
+                            a human moderator should review the message before
+                            a final decision is made.
+                        </p>
+
+                    </div>
+
+                </div>
 
 
-            scores.appendChild(
-                row
-            );
+                <!-- SCORES -->
+                <div class="scores-section">
 
-        }
-    );
+                    <span class="eyebrow">
+                        MODEL PROBABILITIES
+                    </span>
 
+                    <h3>
+                        All category scores
+                    </h3>
 
-    // ================================================
-    // DISPLAY RESULT
-    // ================================================
+                    <div
+                        id="scores"
+                        class="scores"
+                    ></div>
 
-    resultCard.classList.remove(
-        "hidden"
-    );
-
-
-    resultCard.scrollIntoView({
-
-        behavior:
-            "smooth",
-
-        block:
-            "start"
-
-    });
-
-}
+                </div>
 
 
-// =====================================================
-// RESET CONFIDENCE
-// =====================================================
+                <div class="result-disclaimer">
 
-function resetConfidence() {
+                    <strong>
+                        Research prototype notice
+                    </strong>
 
-    const confidenceBar =
-        document.getElementById(
-            "confidenceBar"
-        );
+                    <p>
+                        This system provides a machine-learning prediction
+                        and should not be treated as a final moderation decision.
+                        Flagged or uncertain content should be reviewed by
+                        a human moderator.
+                    </p>
 
+                </div>
 
-    const confidenceLarge =
-        document.getElementById(
-            "confidenceLarge"
-        );
-
-
-    if (
-        confidenceBar
-    ) {
-
-        confidenceBar.style.width =
-            "0%";
-
-    }
+            </section>
 
 
-    if (
-        confidenceLarge
-    ) {
+            <!-- MODEL INFORMATION -->
+            <section
+                id="model-info"
+                class="card model-section"
+            >
 
-        confidenceLarge.textContent =
-            "0%";
+                <div class="section-header">
 
-    }
+                    <div>
 
-}
+                        <span class="eyebrow">
+                            MODEL INFORMATION
+                        </span>
+
+                        <h2>
+                            Current prototype configuration
+                        </h2>
+
+                        <p>
+                            The information below describes the machine-learning
+                            model currently deployed in CyberShield AI.
+                        </p>
+
+                    </div>
+
+                </div>
 
 
-// =====================================================
-// HTML ESCAPING
-// =====================================================
+                <div class="info-grid">
 
-function escapeHtml(
-    value
-) {
+                    <div class="info-card">
 
-    return String(
-        value
-    )
+                        <span>
+                            Dataset
+                        </span>
 
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
+                        <strong>
+                            47,692 social-media posts
+                        </strong>
 
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
+                    </div>
 
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
 
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
+                    <div class="info-card">
 
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
+                        <span>
+                            Classification Task
+                        </span>
 
-}
+                        <strong>
+                            6-class cyberbullying classification
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <span>
+                            Feature Extraction
+                        </span>
+
+                        <strong>
+                            TF-IDF
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <span>
+                            Feature Configuration
+                        </span>
+
+                        <strong>
+                            Unigrams + Bigrams
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <span>
+                            Current Classifier
+                        </span>
+
+                        <strong>
+                            Logistic Regression
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <span>
+                            Validation Split
+                        </span>
+
+                        <strong>
+                            Stratified 80 / 20
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="performance-box">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            CURRENT HELD-OUT PERFORMANCE
+                        </span>
+
+                        <h3>
+                            Prototype performance
+                        </h3>
+
+                    </div>
+
+
+                    <div class="performance-grid">
+
+                        <div class="performance-item">
+
+                            <strong>
+                                82.75%
+                            </strong>
+
+                            <span>
+                                Accuracy
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-item">
+
+                            <strong>
+                                82.75%
+                            </strong>
+
+                            <span>
+                                Macro F1
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="performance-note">
+                        These results refer to the currently deployed prototype.
+                        The final research model should be selected after
+                        systematic comparison of Logistic Regression,
+                        Support Vector Machine and Random Forest.
+                    </p>
+
+                </div>
+
+
+                <div class="class-section">
+
+                    <h3>
+                        Prediction categories
+                    </h3>
+
+
+                    <div class="class-tags">
+
+                        <span>
+                            Age-Based
+                        </span>
+
+                        <span>
+                            Gender-Based
+                        </span>
+
+                        <span>
+                            Ethnicity-Based
+                        </span>
+
+                        <span>
+                            Religion-Based
+                        </span>
+
+                        <span>
+                            Other Cyberbullying
+                        </span>
+
+                        <span>
+                            Not Cyberbullying
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-section">
+
+                    <span class="eyebrow">
+                        PROTOTYPE PIPELINE
+                    </span>
+
+                    <h3>
+                        How the current system works
+                    </h3>
+
+
+                    <div class="pipeline">
+
+                        <div class="pipeline-step">
+                            <span>1</span>
+                            <strong>Text Input</strong>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-step">
+                            <span>2</span>
+                            <strong>TF-IDF</strong>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-step">
+                            <span>3</span>
+                            <strong>Logistic Regression</strong>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-step">
+                            <span>4</span>
+                            <strong>6-Class Prediction</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ABOUT -->
+            <section
+                id="about"
+                class="card about-section"
+            >
+
+                <span class="eyebrow">
+                    ABOUT
+                </span>
+
+                <h2>
+                    About CyberShield AI
+                </h2>
+
+                <p>
+                    CyberShield AI is a research prototype designed to investigate
+                    the use of Natural Language Processing and traditional
+                    machine-learning techniques for automated cyberbullying
+                    detection in social-media text.
+                </p>
+
+                <p>
+                    The system analyses textual content and assigns one of six
+                    classifications while presenting class probabilities,
+                    confidence information and recommendations for human review
+                    where uncertainty is detected.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-inner">
+
+            <div>
+
+                <strong>
+                    CyberShield AI
+                </strong>
+
+                <p>
+                    AI-Based Cyberbullying Detection Research Prototype
+                </p>
+
+            </div>
+
+
+            <div class="footer-note">
+
+                NLP · TF-IDF · Machine Learning
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script
+        src="{{ url_for('static', filename='app.js') }}"
+    ></script>
+
+</body>
+</html>
