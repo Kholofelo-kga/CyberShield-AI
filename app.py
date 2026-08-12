@@ -105,10 +105,13 @@ def predict_text(text: str):
     # These are interface thresholds and not statistically
     # calibrated research thresholds.
     # ---------------------------------------------------------
-    is_uncertain = (
+  is_uncertain = (
+    top_score < 50.0
+    or (
         top_score < 60.0
-        or confidence_margin < 10.0
+        and confidence_margin < 10.0
     )
+)
 
     info = LABELS[predicted_label]
 
