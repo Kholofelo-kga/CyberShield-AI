@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,25 +15,50 @@
 
 <body>
 
-    <!-- NAVIGATION -->
+    <!-- TOP NAVIGATION -->
     <header class="navbar">
 
         <div class="nav-container">
 
             <a href="#home" class="brand">
-                <div class="brand-icon">CS</div>
 
-                <div>
-                    <strong>CyberShield AI</strong>
-                    <span>Research Prototype</span>
+                <div class="brand-icon">
+                    CS
                 </div>
+
+                <div class="brand-text">
+
+                    <strong>
+                        CyberShield AI
+                    </strong>
+
+                    <span>
+                        Research Prototype
+                    </span>
+
+                </div>
+
             </a>
 
-            <nav>
-                <a href="#home">Home</a>
-                <a href="#analyse">Analyse</a>
-                <a href="#model-info">Model Info</a>
-                <a href="#about">About</a>
+
+            <nav class="nav-links">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#analyse">
+                    Analyse
+                </a>
+
+                <a href="#model-info">
+                    Model Info
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
             </nav>
 
         </div>
@@ -43,7 +69,10 @@
     <main>
 
         <!-- HERO -->
-        <section id="home" class="hero">
+        <section
+            id="home"
+            class="hero"
+        >
 
             <div class="hero-badge">
                 AI + NLP RESEARCH PROTOTYPE
@@ -54,17 +83,24 @@
             </h1>
 
             <p class="hero-subtitle">
-                Intelligent cyberbullying detection for social-media text
-                using Natural Language Processing and machine learning.
+                Intelligent cyberbullying detection for social-media
+                text using Natural Language Processing and
+                machine learning.
             </p>
 
             <div class="hero-actions">
 
-                <a href="#analyse" class="primary-link">
+                <a
+                    href="#analyse"
+                    class="primary-link"
+                >
                     Analyse a Message
                 </a>
 
-                <a href="#model-info" class="secondary-link">
+                <a
+                    href="#model-info"
+                    class="secondary-link"
+                >
                     View Model Information
                 </a>
 
@@ -75,7 +111,7 @@
 
         <div class="container">
 
-            <!-- ANALYSIS -->
+            <!-- ANALYSIS CARD -->
             <section
                 id="analyse"
                 class="card analyse-card"
@@ -84,6 +120,7 @@
                 <div class="section-header">
 
                     <div>
+
                         <span class="eyebrow">
                             MESSAGE ANALYSIS
                         </span>
@@ -93,13 +130,18 @@
                         </h2>
 
                         <p>
-                            Enter or paste a social-media message below.
-                            CyberShield AI will estimate the most likely
-                            cyberbullying classification.
+                            Enter or paste a social-media message.
+                            CyberShield AI will estimate the most
+                            likely cyberbullying category.
                         </p>
+
                     </div>
 
-                    <span id="counter" class="counter">
+
+                    <span
+                        id="counter"
+                        class="counter"
+                    >
                         0 / 5000
                     </span>
 
@@ -123,6 +165,7 @@
                         Analyse Message
                     </button>
 
+
                     <button
                         id="clearBtn"
                         class="btn-secondary"
@@ -141,7 +184,7 @@
             </section>
 
 
-            <!-- RESULT -->
+            <!-- RESULT CARD -->
             <section
                 id="resultCard"
                 class="card result-card hidden"
@@ -185,12 +228,14 @@
                         </div>
 
                         <div>
+
                             <span>
                                 Classification
                             </span>
 
                             <strong id="category">
                             </strong>
+
                         </div>
 
                     </div>
@@ -203,12 +248,14 @@
                         </div>
 
                         <div>
+
                             <span>
                                 Confidence
                             </span>
 
                             <strong id="confidence">
                             </strong>
+
                         </div>
 
                     </div>
@@ -221,12 +268,14 @@
                         </div>
 
                         <div>
+
                             <span>
                                 Recommended Action
                             </span>
 
                             <strong id="recommendation">
                             </strong>
+
                         </div>
 
                     </div>
@@ -234,12 +283,13 @@
                 </div>
 
 
-                <!-- CONFIDENCE -->
+                <!-- CONFIDENCE BAR -->
                 <div class="confidence-section">
 
                     <div class="confidence-heading">
 
                         <div>
+
                             <span class="eyebrow">
                                 CONFIDENCE
                             </span>
@@ -247,7 +297,9 @@
                             <h3>
                                 Prediction confidence
                             </h3>
+
                         </div>
+
 
                         <strong
                             id="confidenceLarge"
@@ -271,7 +323,7 @@
                 </div>
 
 
-                <!-- UNCERTAINTY -->
+                <!-- UNCERTAINTY BOX -->
                 <div
                     id="uncertaintyBox"
                     class="uncertainty-box hidden"
@@ -280,6 +332,7 @@
                     <div class="uncertainty-icon">
                         !
                     </div>
+
 
                     <div>
 
@@ -297,9 +350,9 @@
                         </p>
 
                         <p>
-                            Because these probabilities are relatively close,
-                            a human moderator should review the message before
-                            a final decision is made.
+                            Because these probabilities are relatively
+                            close, a human moderator should review the
+                            message before a final decision is made.
                         </p>
 
                     </div>
@@ -307,7 +360,7 @@
                 </div>
 
 
-                <!-- SCORES -->
+                <!-- ALL PROBABILITIES -->
                 <div class="scores-section">
 
                     <span class="eyebrow">
@@ -326,6 +379,7 @@
                 </div>
 
 
+                <!-- DISCLAIMER -->
                 <div class="result-disclaimer">
 
                     <strong>
@@ -333,9 +387,10 @@
                     </strong>
 
                     <p>
-                        This system provides a machine-learning prediction
-                        and should not be treated as a final moderation decision.
-                        Flagged or uncertain content should be reviewed by
+                        This system provides a machine-learning
+                        prediction and should not be treated as a
+                        final moderation decision. Flagged or
+                        uncertain content should be reviewed by
                         a human moderator.
                     </p>
 
@@ -363,8 +418,8 @@
                         </h2>
 
                         <p>
-                            The information below describes the machine-learning
-                            model currently deployed in CyberShield AI.
+                            The information below describes the model
+                            currently deployed in CyberShield AI.
                         </p>
 
                     </div>
@@ -454,19 +509,16 @@
                 </div>
 
 
+                <!-- PERFORMANCE -->
                 <div class="performance-box">
 
-                    <div>
+                    <span class="eyebrow">
+                        CURRENT HELD-OUT PERFORMANCE
+                    </span>
 
-                        <span class="eyebrow">
-                            CURRENT HELD-OUT PERFORMANCE
-                        </span>
-
-                        <h3>
-                            Prototype performance
-                        </h3>
-
-                    </div>
+                    <h3>
+                        Prototype performance
+                    </h3>
 
 
                     <div class="performance-grid">
@@ -500,15 +552,17 @@
 
 
                     <p class="performance-note">
-                        These results refer to the currently deployed prototype.
-                        The final research model should be selected after
-                        systematic comparison of Logistic Regression,
-                        Support Vector Machine and Random Forest.
+                        These figures describe the currently
+                        deployed prototype model. The final research
+                        model should be selected after comparing
+                        Logistic Regression, Support Vector Machine
+                        and Random Forest.
                     </p>
 
                 </div>
 
 
+                <!-- CLASSES -->
                 <div class="class-section">
 
                     <h3>
@@ -547,6 +601,7 @@
                 </div>
 
 
+                <!-- PIPELINE -->
                 <div class="pipeline-section">
 
                     <span class="eyebrow">
@@ -561,35 +616,69 @@
                     <div class="pipeline">
 
                         <div class="pipeline-step">
-                            <span>1</span>
-                            <strong>Text Input</strong>
+
+                            <span>
+                                1
+                            </span>
+
+                            <strong>
+                                Text Input
+                            </strong>
+
                         </div>
+
 
                         <div class="pipeline-arrow">
                             →
                         </div>
 
+
                         <div class="pipeline-step">
-                            <span>2</span>
-                            <strong>TF-IDF</strong>
+
+                            <span>
+                                2
+                            </span>
+
+                            <strong>
+                                TF-IDF
+                            </strong>
+
                         </div>
+
 
                         <div class="pipeline-arrow">
                             →
                         </div>
 
+
                         <div class="pipeline-step">
-                            <span>3</span>
-                            <strong>Logistic Regression</strong>
+
+                            <span>
+                                3
+                            </span>
+
+                            <strong>
+                                Logistic Regression
+                            </strong>
+
                         </div>
+
 
                         <div class="pipeline-arrow">
                             →
                         </div>
 
+
                         <div class="pipeline-step">
-                            <span>4</span>
-                            <strong>6-Class Prediction</strong>
+
+                            <span>
+                                4
+                            </span>
+
+                            <strong>
+                                6-Class Prediction
+                            </strong>
+
                         </div>
 
                     </div>
@@ -614,17 +703,19 @@
                 </h2>
 
                 <p>
-                    CyberShield AI is a research prototype designed to investigate
-                    the use of Natural Language Processing and traditional
-                    machine-learning techniques for automated cyberbullying
-                    detection in social-media text.
+                    CyberShield AI is a research prototype designed
+                    to investigate the use of Natural Language
+                    Processing and traditional machine-learning
+                    techniques for automated cyberbullying detection
+                    in social-media text.
                 </p>
 
                 <p>
-                    The system analyses textual content and assigns one of six
-                    classifications while presenting class probabilities,
-                    confidence information and recommendations for human review
-                    where uncertainty is detected.
+                    The system analyses textual content and assigns
+                    one of six classifications while presenting
+                    class probabilities, confidence information and
+                    recommendations for human review where
+                    uncertainty is detected.
                 </p>
 
             </section>
@@ -653,9 +744,7 @@
 
 
             <div class="footer-note">
-
                 NLP · TF-IDF · Machine Learning
-
             </div>
 
         </div>
@@ -668,4 +757,5 @@
     ></script>
 
 </body>
+
 </html>
